@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>webring api</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div id="app">
+        <a href="/">back</a>
+
+        <h1>webring api</h1>
+
+        <h2>endpoints</h2>
+
+        <div class="endpoint">
+            <h3><span class="method get">GET</span> /api/sites</h3>
+            <p>list all sites (params: ?status=up/broken/dead, ?sort=added_at/click_count/updated_at/name)</p>
+        </div>
+
+        <div class="endpoint">
+            <h3><span class="method post">POST</span> /api/sites</h3>
+            <p>add new site</p>
+        </div>
+
+        <div class="endpoint">
+            <h3><span class="method get">GET</span> /api/sites/{name}</h3>
+            <p>get site details</p>
+        </div>
+
+        <div class="endpoint">
+            <h3><span class="method put">PUT</span> /api/sites/{name}</h3>
+            <p>update site</p>
+        </div>
+
+        <div class="endpoint">
+            <h3><span class="method delete">DELETE</span> /api/sites/{name}</h3>
+            <p>remove site</p>
+        </div>
+
+        <div class="endpoint">
+            <h3><span class="method get">GET</span> /api/stats</h3>
+            <p>get statistics</p>
+        </div>
+
+        <div class="endpoint">
+            <h3><span class="method get">GET</span> /api/traffic</h3>
+            <p>get traffic sources</p>
+        </div>
+
+        <div class="endpoint">
+            <h3><span class="method post">POST</span> /api/check/{name}</h3>
+            <p>check site backlinks (cooldown applies)</p>
+        </div>
+
+        <h2>rss feeds</h2>
+
+        <div class="endpoint">
+            <h3>GET /feed/new</h3>
+            <p>new sites feed (add ?format=atom for atom format)</p>
+        </div>
+
+        <div class="endpoint">
+            <h3>GET /feed/updated</h3>
+            <p>recently updated sites feed</p>
+        </div>
+
+        <div class="endpoint">
+            <h3>GET /feed/status/{status}</h3>
+            <p>sites by status (up/broken/dead)</p>
+        </div>
+
+        <h2>note on manual status override</h2>
+        <p>set manual_status_override in database to override automatic status checks. This can only be changed directly in the database.</p>
+    </div>
+</body>
+</html>

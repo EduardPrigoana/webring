@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{.SiteTitle}}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{if .SiteFavicon}}<link rel="icon" href="{{.SiteFavicon}}">{{end}}
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div id="app">
+        <h1>{{.SiteTitle}}</h1>
+
+        <div id="message"></div>
+
+        <div class="stats">
+            <div class="stat">total: <span id="stat-total">0</span></div>
+            <div class="stat">active: <span id="stat-active" class="status-up">0</span></div>
+            <div class="stat">broken: <span id="stat-broken" class="status-broken">0</span></div>
+            <div class="stat">dead: <span id="stat-dead" class="status-dead">0</span></div>
+            <div class="stat">total clicks: <span id="stat-clicks">0</span></div>
+        </div>
+
+        <div id="traffic"></div>
+
+        <div class="legend">
+            <div class="legend-item"><span class="status-up">●</span> up = reachable + valid backlinks</div>
+            <div class="legend-item"><span class="status-broken">●</span> broken = reachable but missing/broken backlinks</div>
+            <div class="legend-item"><span class="status-dead">●</span> dead = completely unreachable (404/dns/timeout)</div>
+        </div>
+
+        <div class="feed-links">
+            <strong>rss feeds:</strong><br>
+            <a href="/feed/new">new sites</a>
+            <a href="/feed/updated">recently updated</a>
+            <a href="/feed/status/up">active sites</a>
+            <a href="/api/docs">api docs</a>
+        </div>
+
+        <h2>join</h2>
+        <p>add this to your site:</p>
+        <pre><code>&lt;!-- webring --&gt;
+&lt;a href="{{.WebringURL}}/prev/YOUR_SITE_NAME"&gt;prev&lt;/a&gt; |
+&lt;a href="{{.WebringURL}}"&gt;webring&lt;/a&gt; |
+&lt;a href="{{.WebringURL}}/next/YOUR_SITE_NAME"&gt;next&lt;/a&gt; |
+&lt;a href="{{.WebringURL}}/rand/YOUR_SITE_NAME"&gt;random&lt;/a&gt;</code></pre>
+
+        <form id="signup-form" method="POST" action="/signup">
+            <input type="text" name="name" placeholder="sitename (no spaces)" pattern="[a-zA-Z0-9_-]+" required>
+            <input type="url" name="url" placeholder="https://yoursite.com" required>
+            <textarea name="description" placeholder="description (optional)"></textarea>
+            <input type="text" name="contact" placeholder="contact info (optional)">
+            <input type="url" name="logo_url" placeholder="logo/favicon url (optional)">
+            <button type="submit">join</button>
+        </form>
+
+        <h2>members</h2>
+        <div class="sort-links">
+            sort by:
+            <a href="#" data-sort="added_at" class="sort-link active">newest</a>
+            <a href="#" data-sort="click_count" class="sort-link">popular</a>
+            <a href="#" data-sort="updated_at" class="sort-link">updated</a>
+            <a href="#" data-sort="name" class="sort-link">name</a>
+        </div>
+        <div id="sites"></div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
