@@ -1,8 +1,8 @@
-let currentSort = 'added_at';
+let currentSort = 'oldest';
 
 async function loadData() {
     try {
-        const response = await fetch('/data?sort=' + currentSort);
+        const response = await fetch('/data?sort=added_at');
         const data = await response.json();
 
         document.getElementById('stat-total').textContent = data.stats.total_sites;
@@ -18,12 +18,27 @@ async function loadData() {
             document.getElementById('traffic').innerHTML = trafficHtml;
         }
 
-        const sitesHtml = data.sites.length > 0 ? data.sites.map(site => `
+        let sites = data.sites;
+
+        if (currentSort === 'oldest') {
+            sites = sites.slice().reverse();
+        } else if (currentSort === 'click_count') {
+            sites = sites.slice().sort((a, b) => b.click_count - a.click_count);
+        } else if (currentSort === 'updated_at') {
+            sites = sites.slice().sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+        } else if (currentSort === 'name') {
+            sites = sites.slice().sort((a, b) => a.name.localeCompare(b.name));
+        }
+
+        const sitesHtml = sites.length > 0 ? sites.map(site => `
             <div class="site">
                 <div class="site-header">
                     <div class="site-name">
-                        ${site.name} <span class="status-${site.DisplayStatus}">[${site.DisplayStatus}]</span>
-                        ${site.manual_status_override ? '<small>(manual override)</small>' : ''}
+                        <div class="site-name-with-icon">
+                            ${site.logo_url ? `<img src="${site.logo_url}" alt="" class="site-favicon" onerror="this.style.display='none'">` : ''}
+                            <span>${site.name} <span class="status-${site.DisplayStatus}">[${site.DisplayStatus}]</span>
+                            ${site.manual_status_override ? '<small>(manual override)</small>' : ''}</span>
+                        </div>
                     </div>
                     <div class="stat-value">${site.click_count} clicks</div>
                 </div>
@@ -72,6 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const siteNameInput = document.getElementById('site-name-input');
     const webringCode = document.getElementById('webring-code');
+    const copyButton = document.getElementById('copy-button');
     const { baseURL, siteTitle } = window.webringConfig;
 
     siteNameInput.addEventListener('input', function(e) {
@@ -80,5 +96,18 @@ document.addEventListener('DOMContentLoaded', () => {
 <a href="${baseURL}">${siteTitle}</a>
 <a href="${baseURL}/rand/${siteName}">?</a>
 <a href="${baseURL}/next/${siteName}">→</a>`;
+    });
+
+    copyButton.addEventListener('click', function() {
+        const textToCopy = webringCode.textContent;
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            const originalHTML = copyButton.innerHTML;
+            copyButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+            setTimeout(() => {
+                copyButton.innerHTML = originalHTML;
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy:', err);
+        });
     });
 });

@@ -39,10 +39,18 @@
 
         <h2>join</h2>
         <p>add this to your site:</p>
-        <pre><code id="webring-code">&lt;a href="{{.WebringURL}}/prev/YOUR_SITE_NAME"&gt;←&lt;/a&gt;
+        <div class="code-container">
+            <button id="copy-button" class="copy-icon" title="Copy to clipboard">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+            </button>
+            <pre><code id="webring-code">&lt;a href="{{.WebringURL}}/prev/YOUR_SITE_NAME"&gt;←&lt;/a&gt;
 &lt;a href="{{.WebringURL}}"&gt;{{.SiteTitle}}&lt;/a&gt;
 &lt;a href="{{.WebringURL}}/rand/YOUR_SITE_NAME"&gt;?&lt;/a&gt;
 &lt;a href="{{.WebringURL}}/next/YOUR_SITE_NAME"&gt;→&lt;/a&gt;</code></pre>
+        </div>
 
         <form id="signup-form" method="POST" action="/signup">
             <input type="text" id="site-name-input" name="name" placeholder="sitename (no spaces)" pattern="[a-zA-Z0-9_-]+" required>
@@ -56,12 +64,17 @@
         <h2>members</h2>
         <div class="sort-links">
             sort by:
-            <a href="#" data-sort="added_at" class="sort-link active">newest</a>
+            <a href="#" data-sort="oldest" class="sort-link active">oldest</a>
+            <a href="#" data-sort="added_at" class="sort-link">newest</a>
             <a href="#" data-sort="click_count" class="sort-link">popular</a>
             <a href="#" data-sort="updated_at" class="sort-link">updated</a>
             <a href="#" data-sort="name" class="sort-link">name</a>
         </div>
         <div id="sites"></div>
+
+        <footer style="margin-top: 20px; text-align: center;">
+            <a href="https://github.com/eduardprigoana/" target="_blank">github</a>
+        </footer>
     </div>
 
     <script>

@@ -140,3 +140,35 @@ small { color: #666; }
 .post { color: #0f0; }
 .put { color: #ff0; }
 .delete { color: #f00; }
+        .code-container {
+            position: relative;
+        }
+        .copy-icon {
+            position: absolute;
+            top: 0px;
+            right: 8px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+        .copy-icon:hover {
+            opacity: 1;
+        }
+        .copy-icon svg {
+            width: 16px;
+            height: 16px;
+            display: block;
+        }
+        .site-name-with-icon {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .site-favicon {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+        }
