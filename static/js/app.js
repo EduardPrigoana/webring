@@ -69,4 +69,13 @@ document.addEventListener('DOMContentLoaded', () => {
             loadData();
         });
     });
+
+    const siteNameInput = document.getElementById('site-name-input');
+    const webringCode = document.getElementById('webring-code');
+    const { baseURL, siteTitle } = window.webringConfig;
+
+    siteNameInput.addEventListener('input', function(e) {
+        const siteName = e.target.value || 'YOUR_SITE_NAME';
+        webringCode.textContent = `<a href="${baseURL}/prev/${siteName}">←</a> ( <a href="${baseURL}">${siteTitle}</a> ) <a href="${baseURL}/rand/${siteName}">?</a> <a href="${baseURL}/next/${siteName}">→</a>`;
+    });
 });

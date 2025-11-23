@@ -39,14 +39,10 @@
 
         <h2>join</h2>
         <p>add this to your site:</p>
-        <pre><code>&lt;!-- webring --&gt;
-&lt;a href="{{.WebringURL}}/prev/YOUR_SITE_NAME"&gt;prev&lt;/a&gt; |
-&lt;a href="{{.WebringURL}}"&gt;webring&lt;/a&gt; |
-&lt;a href="{{.WebringURL}}/next/YOUR_SITE_NAME"&gt;next&lt;/a&gt; |
-&lt;a href="{{.WebringURL}}/rand/YOUR_SITE_NAME"&gt;random&lt;/a&gt;</code></pre>
+        <pre><code id="webring-code">&lt;a href="{{.WebringURL}}/prev/YOUR_SITE_NAME"&gt;←&lt;/a&gt; ( &lt;a href="{{.WebringURL}}"&gt;{{.SiteTitle}}&lt;/a&gt; ) &lt;a href="{{.WebringURL}}/rand/YOUR_SITE_NAME"&gt;?&lt;/a&gt; &lt;a href="{{.WebringURL}}/next/YOUR_SITE_NAME"&gt;→&lt;/a&gt;</code></pre>
 
         <form id="signup-form" method="POST" action="/signup">
-            <input type="text" name="name" placeholder="sitename (no spaces)" pattern="[a-zA-Z0-9_-]+" required>
+            <input type="text" id="site-name-input" name="name" placeholder="sitename (no spaces)" pattern="[a-zA-Z0-9_-]+" required>
             <input type="url" name="url" placeholder="https://yoursite.com" required>
             <textarea name="description" placeholder="description (optional)"></textarea>
             <input type="text" name="contact" placeholder="contact info (optional)">
@@ -65,6 +61,12 @@
         <div id="sites"></div>
     </div>
 
+    <script>
+        window.webringConfig = {
+            baseURL: '{{.WebringURL}}',
+            siteTitle: '{{.SiteTitle}}'
+        };
+    </script>
     <script src="/static/js/app.js"></script>
 </body>
 </html>
