@@ -44,8 +44,8 @@ func CheckSiteBacklinks(site models.Site, webringURL string) string {
 
 	content := strings.ToLower(string(body))
 
-	nextLink := strings.ToLower(fmt.Sprintf("%s/next/%s", webringURL, site.Name))
-	prevLink := strings.ToLower(fmt.Sprintf("%s/prev/%s", webringURL, site.Name))
+	nextLink := strings.TrimRight(webringURL, "/") + "/next/" + site.Name
+	prevLink := strings.TrimRight(webringURL, "/") + "/prev/" + site.Name
 
 	hasNext := strings.Contains(content, nextLink)
 	hasPrev := strings.Contains(content, prevLink)
