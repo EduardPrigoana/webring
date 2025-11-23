@@ -1,0 +1,24 @@
+name: Deploy Hooks
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send GET requests to all Deploy Hooks
+        env:
+          WEBRING_DEPLOY_HOOK: ${{ secrets.WEBRING_DEPLOY_HOOK }}
+          YERING_DEPLOY_HOOK: ${{ secrets.YERING_DEPLOY_HOOK }}
+        run: |
+          hooks=(
+            "$WEBRING_DEPLOY_HOOK"
+            "$YERING_DEPLOY_HOOK"
+          )
+
+          for hook in "${hooks[@]}"; do
+            echo "Triggering deploy hook: $hook"
+            curl -fsSL -X GET "$hook" || echo "Failed to trigger $hook"
+          done
